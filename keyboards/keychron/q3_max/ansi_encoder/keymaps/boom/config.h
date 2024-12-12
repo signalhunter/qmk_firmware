@@ -11,3 +11,6 @@
 #define RGB_MATRIX_DEFAULT_HUE 0
 #define RGB_MATRIX_DEFAULT_SAT 0
 #define RGB_MATRIX_DEFAULT_VAL 0
+
+// Just one more layer bro
+#define DYNAMIC_KEYMAP_LAYER_COUNT 5
