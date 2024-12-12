@@ -57,7 +57,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [WIN_FN] = LAYOUT_tkl_ansi(
         _______,  KC_BRID,  KC_BRIU,  KC_TASK,  KC_FILE,  RGB_VAD,  RGB_VAI,  KC_MPRV,  KC_MPLY,  KC_MNXT,  KC_MUTE,  KC_VOLD,  KC_VOLU,    _______,    _______,  _______,  _______,
         _______,  BT_HST1,  BT_HST2,  BT_HST3,  P2P4G,    _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,    _______,    KC_WH_L,  KC_WH_R,  KC_WH_U,
-        _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,    _______,    KC_BTN1,  KC_BTN2,  KC_WH_D,
+        RGB_TOG,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,    _______,    KC_BTN1,  KC_BTN2,  KC_WH_D,
         _______,  KC_BTN3,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,              _______,
         _______,            KC_BTN2,  KC_BTN1,  _______,  _______,  BAT_LVL,  NK_TOGG,  _______,  _______,  _______,  _______,              _______,              KC_MS_U,
         _______,  _______,  _______,                                _______,                                _______,  _______,  _______,    _______,    KC_MS_L,  KC_MS_D,  KC_MS_R),
@@ -96,4 +96,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
 
     return true;
+}
+
+// Make arrow keys glow when mouse keys layer is active
+bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
+    const uint16_t arrow_key_lights[4] = {75, 84, 85, 86};
+    for (uint8_t i = 0; i < 4; i++) {
+        if (get_highest_layer(layer_state | default_layer_state) == WIN_FN) {
+            rgb_matrix_set_color(arrow_key_lights[i], RGB_WHITE);
+            // SET_LED_ON(arrow_key_lights[i]);
+        }
+    }
+    return false;
 }
